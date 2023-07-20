@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Infrastructure.Services.AssetProvider
@@ -9,5 +10,6 @@ namespace Infrastructure.Services.AssetProvider
         GameObject Instantiate(string path, Vector3 at, bool useDefaultIfNotFound = true);
         GameObject Instantiate(string path, bool useDefaultIfNotFound = true);
         T Instantiate<T>(Transform root = null, bool useDefaultIfNotFound = true) where T : Component;
+        UniTask<T> LoadAsync<T>(string name) where T : Object;
     }
 }

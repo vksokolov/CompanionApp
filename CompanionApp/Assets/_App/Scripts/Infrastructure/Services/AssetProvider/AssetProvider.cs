@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Utils;
 using Utils.Attributes;
@@ -10,7 +11,7 @@ namespace Infrastructure.Services.AssetProvider
     {
         private readonly Dictionary<Type, string> _defaultResourcePaths = new()
         {
-            { typeof(Sprite), "Default/Sprite" },
+            { typeof(Sprite), "Default/ImagePlaceholder" },
         };
         
         public T Load<T>(string path, bool useDefaultIfNotFound = true) where T : Object
@@ -59,6 +60,21 @@ namespace Infrastructure.Services.AssetProvider
             
             var prefab = Load<T>(path, useDefaultIfNotFound);
             return Object.Instantiate(prefab, root);
+        }
+
+        public async UniTask<T> LoadAsync<T>(string name) where T : Object
+        {
+            // todo: external download manager must be here, using local loading until then
+            await GetDebugDelay();
+            return Load<T>(name);;
+
+            UniTask GetDebugDelay()
+            {
+                var delaySeconds = UnityEngine.Random.Range(1f, 2f);
+                var delaySpan = TimeSpan.FromSeconds(delaySeconds);
+            
+                return UniTask.Delay(delaySpan);
+            }
         }
 
         public void Dispose()
