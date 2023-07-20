@@ -1,7 +1,8 @@
+using System;
+
 namespace Infrastructure.Services
 {
-    public class IService
+    public interface IService : IDisposable
     {
-        
     }
 }
