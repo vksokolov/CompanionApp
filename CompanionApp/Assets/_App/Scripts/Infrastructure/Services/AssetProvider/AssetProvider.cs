@@ -11,7 +11,6 @@ namespace Infrastructure.Services.AssetProvider
         private readonly Dictionary<Type, string> _defaultResourcePaths = new()
         {
             { typeof(Sprite), "Default/Sprite" },
-            { typeof(DebugButton), "Default/DebugButton"}
         };
         
         public T Load<T>(string path, bool useDefaultIfNotFound = true) where T : Object
